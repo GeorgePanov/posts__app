@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const EditTodoFrom = ({editTodo, task}) => {
+const EditTodoFrom = ({ editTodo, task }) => {
     const [value, setValue] = useState(task.task)
 
     const handleSubmit = (e) => {
@@ -10,7 +10,7 @@ const EditTodoFrom = ({editTodo, task}) => {
 
         setValue('');
     }
-    
+
     return (
         <form className='TodoForm' onSubmit={handleSubmit}>
             <input
@@ -23,7 +23,8 @@ const EditTodoFrom = ({editTodo, task}) => {
 
             <button
                 type='submit'
-                className='todo-btn'>
+                className='todo-btn'
+            >
                 Update Task
             </button>
         </form>

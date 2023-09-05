@@ -10,7 +10,7 @@ const TodoWrapper = () => {
 
     const addTodo = (todo) => {
         setTodos([...todos, { id: uuidv4(), task: todo, completed: false, isEditing: false }])
-        console.log(todos)
+        // console.log(todos)
     }
 
     const toggleComplete = (id) => {
@@ -43,8 +43,8 @@ const TodoWrapper = () => {
             <h1>Get Things Done!</h1>
             <TodoFrom addTodo={addTodo} />
             {todos.map((todo, index) => (
-                todo.isEditing ? (<EditTodoFrom editTodo={editTask} task={todo} />) : (
-                    <Todo
+                todo.isEditing ? (<EditTodoFrom editTodo={editTask} task={todo} />)
+                    : (<Todo
                         task={todo}
                         key={index}
                         toggleComplete={toggleComplete}
