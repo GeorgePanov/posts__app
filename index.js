@@ -43,9 +43,29 @@ async.addEventListener('click', () => {
     console.log("Конец программы");
 })
 
+function main() {
+    setTimeout(function greet() {
+        console.log('Hello!')
+    }, 2000)
 
+    console.log('Bye!')
+}
 
+// main()
 
+function main() {
+    setTimeout(() => {
+        setTimeout(() => {
+            setTimeout(() => {
+                setTimeout(() => {
+                    console.log('Четвертый!')
+                }, 5000)
+                console.log('Третий!')
+            }, 5000)
+            console.log('Второй')
+        }, 5000)
+        console.log('Первый!')
+    }, 5000)
+}
 
-
-
+main()
