@@ -8,27 +8,25 @@ import MyButton from "./components/UI/button/MyButton";
 import { usePosts } from "./hooks/usePosts";
 import PostService from "./API/PostService";
 import Loader from "./components/UI/Loader/Loader";
+import { useFetching } from "./hooks/useFetching";
 
 function App() {
     const [posts, setPosts] = useState([])
     const [filter, setFilter] = useState({ sort: '', query: '' })
     const [modal, setModal] = useState(false)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
-    const [isPostLoading, setIsPostsLoading] = useState(false)
+    const [fetchPosts, isPostLoading, postError] = useFetching(async () => {
+        const post = await PostService.getAll();
+        setPosts(post)
+    })
+
+    useEffect(() => {
+        fetchPosts()
+    }, [])
 
     const createPost = (newPost) => {
         setPosts([newPost, ...posts])
-    }
-
-    // Получаем посты
-    async function fetchPosts() {
-        setIsPostsLoading(true)
-        setTimeout(async () => {
-            const post = await PostService.getAll();
-            setPosts(post)
-            setIsPostsLoading(false)
-        }, 2000)
-
+        setModal(false)
     }
 
     // Получаем post из дочернего компонента
@@ -36,9 +34,6 @@ function App() {
         setPosts(posts.filter(p => p.id !== post.id))
     }
 
-    useEffect(() => {
-        fetchPosts()
-    }, [])
 
     return (
         <div className="App">
@@ -53,9 +48,12 @@ function App() {
                 filter={filter}
                 setFilter={setFilter}
             />
+            {postError &&
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <h3>Произошка ошибка ({postError})</h3>
+                </div>}
             {isPostLoading
-                // ? <h1 style={{ textAlign: 'center' }}>Идет загрузка...</h1>
-                ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader /></div>
+                ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}><Loader /></div>
                 : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты' />}
         </div>
     )
