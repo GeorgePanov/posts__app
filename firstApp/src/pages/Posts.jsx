@@ -60,13 +60,13 @@ function Posts() {
                 filter={filter}
                 setFilter={setFilter}
             />
+            {isPostLoading
+                ? <Loader />
+                : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты' />}
             {postError &&
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <h3>Произошка ошибка ({postError})</h3>
                 </div>}
-            {isPostLoading
-                ? <Loader />
-                : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты' />}
             <Pagination
                 page={page}
                 changePage={changePage}

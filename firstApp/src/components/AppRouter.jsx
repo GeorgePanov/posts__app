@@ -1,22 +1,29 @@
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom"
-import About from '../pages/About';
-import Posts from '../pages/Posts';
-import Error from '../pages/Error';
-import PostIdPage from '../pages/PostIdPage';
+import { privateRoutes, publicRoutes } from '../router';
 
 const AppRouter = () => {
-    return (
-        <Routes>
-            <Route path="/" />
-            <Route path="/about" element={<About />} />
-            <Route path="/posts" element={<Posts />} />
-            <Route path="/posts/:id" element={<PostIdPage />} />
+    const isAuth = true
 
-            {/* Если страница будет не найдена, то нужно будет её преадресовать на страницу error */}
-            <Route path="/error" element={<Error />} />
-            <Route path="*" element={<Navigate to='error' />} />
-        </Routes>
+    return (
+        isAuth
+            ?
+            <Routes>
+                {privateRoutes.map(route =>
+                    <Route path={route.path} Component={route.component} />
+                )}
+
+                <Route path="/" element={<Navigate to='posts' />} />
+                <Route path="*" element={<Navigate to='error' />} />
+            </Routes>
+            :
+            <Routes>
+                {publicRoutes.map(route =>
+                    <Route path={route.path} Component={route.component} />
+                )}
+
+                <Route path="*" element={<Navigate to='login' />} />
+            </Routes>
     );
 };
 
