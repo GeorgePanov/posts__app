@@ -28,6 +28,10 @@
     align-items: center;
 }
 
+.post__btns {
+    display: flex;
+}
+
 .post-enter {
     opacity: 0;
     transform: scale(0.9);

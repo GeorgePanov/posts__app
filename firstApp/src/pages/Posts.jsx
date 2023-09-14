@@ -65,7 +65,7 @@ function Posts() {
                     <h3>Произошка ошибка ({postError})</h3>
                 </div>}
             {isPostLoading
-                ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}><Loader /></div>
+                ? <Loader />
                 : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Посты' />}
             <Pagination
                 page={page}
